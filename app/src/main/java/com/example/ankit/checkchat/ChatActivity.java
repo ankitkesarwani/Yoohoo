@@ -66,6 +66,12 @@ public class ChatActivity extends AppCompatActivity {
     private static final int TOTAL_ITEMS_TO_LOAD = 10;
     private int mCurrentPage = 1;
 
+    //New Solution
+
+    private int itemPos = 0;
+
+    private String mLastKey = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -203,9 +209,63 @@ public class ChatActivity extends AppCompatActivity {
 
                 mCurrentPage++;
 
-                messagesList.clear();
+                itemPos = 0;
 
-                loadMessages();
+                loadMoreMessages();
+
+            }
+        });
+
+    }
+
+    private void loadMoreMessages() {
+
+        DatabaseReference messageRef = mRootRef.child("messages").child(mCurrentUserId).child(mChatUser);
+
+        Query messageQuery = messageRef.orderByKey().endAt(mLastKey).limitToLast(10);
+
+
+        messageQuery.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                Messages message = dataSnapshot.getValue(Messages.class);
+
+                messagesList.add(itemPos++, message);
+
+                if(itemPos == 1) {
+
+                    String messageKey = dataSnapshot.getKey();
+
+                    mLastKey = messageKey;
+
+                }
+
+                mAdapter.notifyDataSetChanged();
+
+                mRefreshLayout.setRefreshing(false);
+
+                mLinearLayout.scrollToPositionWithOffset(10, 0  );
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
@@ -223,6 +283,16 @@ public class ChatActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 Messages message = dataSnapshot.getValue(Messages.class);
+
+                itemPos++;
+
+                if(itemPos == 1) {
+
+                    String messageKey = dataSnapshot.getKey();
+
+                    mLastKey = messageKey;
+
+                }
 
                 messagesList.add(message);
                 mAdapter.notifyDataSetChanged();

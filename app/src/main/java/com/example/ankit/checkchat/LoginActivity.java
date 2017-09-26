@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(!TextUtils.isEmpty(email) || !TextUtils.isEmpty(password)) {
 
-                    mLoginProgress.setTitle("Logging In");
+                    mLoginProgress.setTitle("Logging in");
                     mLoginProgress.setMessage("Please wait while we checking your credentials");
                     mLoginProgress.setCanceledOnTouchOutside(false);
                     mLoginProgress.show();
