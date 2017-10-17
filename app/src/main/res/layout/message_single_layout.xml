@@ -49,5 +49,23 @@
         android:text="@string/_00_00"
         android:textSize="12sp" />
 
+    <ImageView
+        android:id="@+id/message_image_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/message_text_layout"
+        android:layout_below="@+id/message_text_layout"
+        android:layout_marginLeft="0dp"
+        android:layout_toEndOf="@+id/message_profile_layout"
+        android:adjustViewBounds="true"
+        android:baselineAlignBottom="true"
+        android:clickable="true"
+        android:contextClickable="true"
+        android:cropToPadding="true"
+        android:padding="0dp"
+        android:scaleType="centerCrop" />
+
 
 </RelativeLayout>

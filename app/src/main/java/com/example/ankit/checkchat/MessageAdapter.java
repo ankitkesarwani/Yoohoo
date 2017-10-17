@@ -7,6 +7,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,6 +56,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         public TextView messageText;
         public CircleImageView profileImage;
         public TextView displayName;
+        public ImageView messageImage;
 
         public MessageViewHolder(View view) {
             super(view);
@@ -61,6 +64,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             messageText = (TextView) view.findViewById(R.id.message_text_layout);
             profileImage = (CircleImageView) view.findViewById(R.id.message_profile_layout);
             displayName = (TextView) view.findViewById(R.id.name_text_layout);
+            messageImage = (ImageView) view.findViewById(R.id.message_image_layout);
 
         }
     }
@@ -71,6 +75,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         Messages c = mMessageList.get(i);
 
         String from_user = c.getFrom();
+        String message_type = c.getType();
 
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(from_user);
 
@@ -93,6 +98,19 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
             }
         });
+
+        if(message_type.equals("text")) {
+
+            viewHolder.messageText.setText(c.getMessage());
+            viewHolder.messageImage.setVisibility(View.INVISIBLE);
+
+        } else {
+
+            viewHolder.messageText.setVisibility(View.INVISIBLE);
+
+            Picasso.with(viewHolder.profileImage.getContext()).load(c.getMessage()).placeholder(R.drawable.default_avatar).into(viewHolder.messageImage);
+
+        }
 
         viewHolder.messageText.setText(c.getMessage());
 
