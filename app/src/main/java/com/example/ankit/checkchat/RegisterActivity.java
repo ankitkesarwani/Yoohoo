@@ -53,7 +53,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         mRegProgress = new ProgressDialog(this);
 
-
         mAuth = FirebaseAuth.getInstance();
 
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");

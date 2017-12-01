@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -209,7 +210,6 @@ public class SettingsActivity extends AppCompatActivity {
                 StorageReference filePath = mImageStorage.child("profile_images").child(current_user_id + ".jpg");
 
                 final StorageReference thumb_filePath = mImageStorage.child("profile_images").child("thumbs").child(current_user_id + ".jpg");
-
                 filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
